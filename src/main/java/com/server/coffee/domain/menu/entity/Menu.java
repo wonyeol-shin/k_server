@@ -20,5 +20,14 @@ public class Menu extends BaseTimeEntity {
     private String name;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
-    private Long price;
+    private int price;
+
+    private Menu(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public static Menu create(String name, int price){
+        return new Menu(name, price);
+    }
 }
