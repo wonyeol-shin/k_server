@@ -1,6 +1,8 @@
 package com.server.coffee.domain.user.entity;
 
 import com.server.coffee.common.entity.BaseTimeEntity;
+import com.server.coffee.common.exception.BusinessException;
+import com.server.coffee.common.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +31,20 @@ public class User extends BaseTimeEntity {
 
     public static User create(String nickname){
         return new User(nickname);
+    }
+
+    public void charge(int point) {
+        if (point < 1_000 || point > 1_000_000) {
+            throw new BusinessException(ErrorCode.INVALID_POINT_AMOUNT);
+        }
+        this.point += point;
+    }
+
+    public void use(int point) {
+        if (this.point - point < 0) {
+            throw new BusinessException(ErrorCode.INVALID_POINT_AMOUNT);
+        }
+        this.point -= point;
     }
 
 }
