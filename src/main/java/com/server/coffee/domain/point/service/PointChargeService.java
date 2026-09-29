@@ -15,6 +15,6 @@ public class PointChargeService {
 
     public void findUserAndCharge(String nickname, int point) {
         User user = userService.findUser(nickname);
-        pointHistoryService.charge(user, 정point);
+        pointHistoryService.charge(user, point);
     }
 }
