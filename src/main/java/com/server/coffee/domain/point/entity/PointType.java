@@ -3,7 +3,7 @@ package com.server.coffee.domain.point.entity;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum PointStatus {
+public enum PointType {
     CHARGE("CHARGE"),
     USED("USED"),
     ;
