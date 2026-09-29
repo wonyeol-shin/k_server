@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/coffees")
 public class MenuController {
 
     private final MenuService menuService;
 
-    @GetMapping("/coffees")
+    @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<MenuListResponse>>> getAllCoffee(
             @PageableDefault(size = 10) Pageable pageable
     ) {
