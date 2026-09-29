@@ -1,7 +1,10 @@
 spring:
   application:
     name: coffee
-
+  data:
+    web:
+      pageable:
+        max-page-size: 50
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/coffee?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&rewriteBatchedStatements=true
     username: root
