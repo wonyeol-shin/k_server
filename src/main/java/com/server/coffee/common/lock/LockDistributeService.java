@@ -1,23 +1,24 @@
-가package com.server.coffee.domain.point.service;
+package com.server.coffee.common.lock;
 
 import com.server.coffee.common.exception.BusinessException;
 import com.server.coffee.common.exception.ErrorCode;
+import com.server.coffee.domain.point.service.PointHistoryFacade;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
-public class PointHistoryLockService {
+public class LockDistributeService {
 
     private final RedissonClient redissonClient;
-    private final PointHistoryFacade pointHistoryFacade;
 
-    public void charge(String nickname, int point){
-        RLock lock = redissonClient.getLock("lock:point:" + nickname);
+    public <T> T execute(String key, Supplier<T> supplier) {
+        RLock lock = redissonClient.getLock(key);
 
         boolean acquired = false;
         try{
@@ -28,7 +29,7 @@ public class PointHistoryLockService {
                 throw new BusinessException(ErrorCode.TIMEOUT_EXCEPTION);
             }
             // 로직 수행
-            pointHistoryFacade.findUserAndCharge(nickname, point);
+            return supplier.get();
 
         } catch (InterruptedException e) {
             // 락 대기 중 스레드가 중단됨 (서버 종료 등)
@@ -40,6 +41,13 @@ public class PointHistoryLockService {
                 lock.unlock();
             }
         }
-
     }
+
+    public void execute(String key, Runnable runnable) {
+        execute(key,()->{
+            runnable.run();
+            return null;}
+        );
+    }
+
 }
