@@ -16,10 +16,19 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String nickname;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED")
     private int point;
+
+    private User(String nickname) {
+        this.nickname = nickname;
+        this.point = 0;
+    }
+
+    public static User create(String nickname){
+        return new User(nickname);
+    }
 
 }
