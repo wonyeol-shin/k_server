@@ -23,30 +23,15 @@ public class Redis {
     @Bean
     public GenericJacksonJsonRedisSerializer genericJacksonJsonRedisSerializer() {
         BasicPolymorphicTypeValidator typeValidator = BasicPolymorphicTypeValidator.builder()
-                .allowIfBaseType("com.server.coffee")
-                .allowIfBaseType("java.util")
-                .allowIfBaseType("java.time")
+                .allowIfSubType("com.server.coffee")
+                .allowIfSubType("java.util")
+                .allowIfSubType("java.time")
                 .build();
 
         return GenericJacksonJsonRedisSerializer.builder()
                 .enableDefaultTyping(typeValidator)
                 .customize(MapperBuilder::findAndAddModules)
                 .build();
-    }
-
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate(
-            RedisConnectionFactory connectionFactory,
-            GenericJacksonJsonRedisSerializer redisValueSerializer
-    ) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(redisValueSerializer);
-        template.setHashValueSerializer(redisValueSerializer);
-        template.afterPropertiesSet();
-        return template;
     }
 
     @Bean

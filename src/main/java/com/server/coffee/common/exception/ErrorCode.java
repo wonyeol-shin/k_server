@@ -14,7 +14,9 @@ public enum ErrorCode {
 
     NOT_SUFFICIENT(HttpStatus.BAD_REQUEST,"ORDER_001", "포인트가 부족합니다."),
 
-    INVALID_INPUT(HttpStatus.BAD_REQUEST, "COMMON_001", "입력값이 잘못 되었습니다." )
+    INVALID_INPUT(HttpStatus.BAD_REQUEST, "COMMON_001", "입력값이 잘못 되었습니다." ),
+
+    TIMEOUT_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "SERVER_001", "잠시 후 다시 시도해 주세요" )
     ;
 
     private final HttpStatus httpStatus;

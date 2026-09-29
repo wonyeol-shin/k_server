@@ -2,7 +2,7 @@ package com.server.coffee.domain.point.controller;
 
 import com.server.coffee.common.api.ApiResponse;
 import com.server.coffee.domain.point.dto.request.ChargeRequest;
-import com.server.coffee.domain.point.service.PointHistoryFacade;
+import com.server.coffee.domain.point.service.PointHistoryLockService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/points")
 public class PointController {
 
-    private final PointHistoryFacade pointHistoryFacade;
+    private final PointHistoryLockService pointHistoryLockService;
 
     @PostMapping
     public ResponseEntity<ApiResponse<Void>> charge(
             @RequestBody @Valid ChargeRequest request)
     {
-        pointHistoryFacade.findUserAndCharge(request.nickname(), request.point());
+        pointHistoryLockService.charge(request.nickname(), request.point());
        return ResponseEntity.ok(ApiResponse.ok());
     }
 }
