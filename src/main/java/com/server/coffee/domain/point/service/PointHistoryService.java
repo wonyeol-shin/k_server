@@ -1,5 +1,6 @@
 package com.server.coffee.domain.point.service;
 
+import com.server.coffee.domain.order.entity.Order;
 import com.server.coffee.domain.point.entity.PointHistory;
 import com.server.coffee.domain.point.repository.PointHistoryRepository;
 import com.server.coffee.domain.user.entity.User;
@@ -15,5 +16,10 @@ public class PointHistoryService {
     public void charge(User user, int point) {
         pointHistoryRepository.save(PointHistory.charge(point,user));
         user.charge(point);
+    }
+
+    public void use(User user, int point, Order order) {
+        pointHistoryRepository.save(PointHistory.use(point,user,order));
+        user.use(point);
     }
 }

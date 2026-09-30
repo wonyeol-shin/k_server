@@ -4,11 +4,14 @@ import com.server.coffee.common.entity.BaseTimeEntity;
 import com.server.coffee.domain.order.entity.Order;
 import com.server.coffee.domain.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @Table(name = "point_historys")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PointHistory extends BaseTimeEntity {
 
     @Id
