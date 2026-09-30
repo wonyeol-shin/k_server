@@ -1,6 +1,8 @@
 package com.server.coffee.domain.menu.service;
 
 import com.server.coffee.common.api.PageResponse;
+import com.server.coffee.common.exception.BusinessException;
+import com.server.coffee.common.exception.ErrorCode;
 import com.server.coffee.domain.menu.dto.response.MenuListResponse;
 import com.server.coffee.domain.menu.entity.Menu;
 import com.server.coffee.domain.menu.repository.MenuRepository;
@@ -13,14 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MenuService {
 
     private final MenuRepository menuRepository;
 
-    @Transactional(readOnly = true)
     @Cacheable(value = "menu_list", key = "#pageable.pageSize + ':' + #pageable.pageNumber")
     public PageResponse<MenuListResponse> getAll(Pageable pageable) {
         Page<Menu> page = menuRepository.findAll(pageable);
         return PageResponse.of(page, MenuListResponse::from);
+    }
+
+    public Menu findMenu(Long menuId) {
+        return menuRepository.findById(menuId).orElseThrow(
+                () -> new BusinessException(ErrorCode.NOT_FOUND_MENU)
+        );
     }
 }
