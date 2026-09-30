@@ -8,6 +8,6 @@ public enum PointType {
     USED("USED"),
     ;
 
-    private final String status;
+    private final String type;
 
 }
