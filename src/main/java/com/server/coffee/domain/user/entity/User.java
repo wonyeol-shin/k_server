@@ -42,7 +42,7 @@ public class User extends BaseTimeEntity {
 
     public void use(int point) {
         if (this.point - point < 0) {
-            throw new BusinessException(ErrorCode.INVALID_POINT_AMOUNT);
+            throw new BusinessException(ErrorCode.INSUFFICIENT_POINT);
         }
         this.point -= point;
     }
