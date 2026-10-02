@@ -24,6 +24,6 @@ public class OrderController {
             @RequestBody @Valid CreateOrderRequest request
     ){
         return ResponseEntity.ok(ApiResponse.ok(
-                orderFacade.order(request.id(),request.nickname())));
+                orderFacade.order(request.id(),request.nickname(), request.orderDate())));
     }
 }
