@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/coffees")
@@ -24,5 +26,10 @@ public class MenuController {
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return ResponseEntity.ok(ApiResponse.ok(menuService.getAll(pageable)));
+    }
+
+    @GetMapping("/top-ordered")
+    public ResponseEntity<ApiResponse<List<MenuListResponse>>> getTopOrdered(){
+        return ResponseEntity.ok(ApiResponse.ok(menuService.getTopTreeMenuInSevenDay()));
     }
 }
