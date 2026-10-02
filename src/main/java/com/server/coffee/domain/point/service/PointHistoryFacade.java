@@ -14,7 +14,7 @@ public class PointHistoryFacade {
 
     public void charge(String nickname, int point) {
         lockDistributeService.execute(
-                LockKey.point(nickname),
+                LockKey.pointLock(nickname),
                 () -> pointChargeService.findUserAndCharge(nickname, point)
         );
     }

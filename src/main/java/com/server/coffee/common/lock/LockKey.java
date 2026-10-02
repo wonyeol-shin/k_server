@@ -1,6 +1,8 @@
 package com.server.coffee.common.lock;
 
-public class LockKey {
+public final class LockKey {
 
-    public static String point(String nickname) {return "lock:point:" + nickname;}
+    private LockKey(){}
+
+    public static String pointLock(String nickname) {return "lock:point:" + nickname;}
 }
